@@ -75,6 +75,25 @@ This project focuses on analyzing sales data, forecasting revenue trends, and im
     if 'view_count' not in st.session_state:
         st.session_state['view_count'] = 0
     st.session_state['view_count'] += 1
+    # Unique Visitor Tracking using Session State
+if 'user_views' not in st.session_state:
+    st.session_state['user_views'] = {}
+
+# Assign a unique identifier for each user (basic hashing using IP)
+try:
+    user_ip = requests.get('https://api64.ipify.org').text  # Fetch external IP
+    if user_ip not in st.session_state['user_views']:
+        st.session_state['user_views'][user_ip] = True
+except Exception:
+    user_ip = "Unknown"
+
+# Admin Access Toggle (Ensure Only You Can See Visitor Count)
+ADMIN_SECRET = "my_secret_code"  # Change this to a unique code only you know
+admin_access = st.sidebar.text_input("🔒 Admin Access (Enter Code)", type="password")
+
+if admin_access == ADMIN_SECRET:
+    st.write(f"🔒 **Total Unique Visitors:** {len(st.session_state['user_views'])}")
+
     # Store view count only for admin tracking
     if 'user_views' not in st.session_state:
         st.session_state['user_views'] = []
