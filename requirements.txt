@@ -1,0 +1,11 @@
+streamlit
+numpy
+pandas
+plotly
+xgboost
+statsmodels
+scikit-learn
+matplotlib
+requests
+openai
+langchain_community
